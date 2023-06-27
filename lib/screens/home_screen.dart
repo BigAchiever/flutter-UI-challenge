@@ -7,7 +7,7 @@ import 'package:todo_ui_challenge/widgets/quote_widget.dart';
 import '../services/functions/functions.dart';
 import '../utils/color.dart';
 import '../widgets/card_align.dart';
-import 'card_details.dart';
+import 'expanded_card_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen>
                   } else {
                     isContentVisible = true;
                     // Vertical swipe
-                    if (details.delta.dy < -10 && details.delta.dy.abs() > 2) {
+                    if (details.delta.dy < 1 && details.delta.dy.abs() > 2) {
                       // Swipe upwards
                       Navigator.push(
                         context,
@@ -65,15 +65,40 @@ class _HomeScreenState extends State<HomeScreen>
                           transitionDuration: const Duration(seconds: 1),
                           reverseTransitionDuration:
                               const Duration(milliseconds: 800),
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return AnimatedSize(
-                              duration: const Duration(milliseconds: 1),
-                              child: DetailScreen(
-                                currentPage: currentPage,
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            final scaleAnimation =
+                                Tween(begin: 0.2, end: 1.0).animate(
+                              CurvedAnimation(
+                                  parent: animation, curve: Curves.easeInOut),
+                            );
+
+                            final fadeAnimation =
+                                Tween<double>(begin: 0, end: 1).animate(
+                              CurvedAnimation(
+                                  parent: animation,
+                                  curve: Curves.fastOutSlowIn),
+                            );
+
+                            final offsetY =
+                                MediaQuery.of(context).size.height * 0.2;
+
+                            return Transform.translate(
+                              offset:
+                                  Offset(0, offsetY * (1 - animation.value)),
+                              child: ScaleTransition(
+                                scale: scaleAnimation,
+                                child: FadeTransition(
+                                  opacity: fadeAnimation,
+                                  child: child,
+                                ),
                               ),
                             );
                           },
+                          pageBuilder: (context, animation1, animation2) =>
+                              DetailScreen(
+                            currentPage: currentPage,
+                          ),
                         ),
                       );
                     }
@@ -91,11 +116,13 @@ class _HomeScreenState extends State<HomeScreen>
                     });
                   },
                   children: [
-                    Column(
-                      children: [
-                        const SizedBox(height: 50.0),
-                        CenteredCard(currentpagenumber: 0),
-                      ],
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 50.0),
+                          CenteredCard(currentpagenumber: 0),
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -108,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
                         const SizedBox(height: 50.0),
                         CenteredCard(currentpagenumber: 2),
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),

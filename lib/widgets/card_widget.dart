@@ -4,41 +4,34 @@ import 'package:todo_ui_challenge/utils/theme.dart';
 
 import '../utils/color.dart';
 
-cardWidget(BuildContext context, int currentpagenumber) => Hero(
-      flightShuttleBuilder: (flightContext, animation, flightDirection,
-              fromHeroContext, toHeroContext) =>
-          Material(
-        color: Colors.transparent,
-        child: toHeroContext.widget,
+cardWidget(BuildContext context, int currentpagenumber) => Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 10,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
-      transitionOnUserGestures: true,
-      tag: 'card$currentpagenumber',
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              blurRadius: 10,
-              offset: const Offset(0, 10),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(10),
+          color: ThemeClass.cardColor,
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: ThemeClass.cardColor,
-          ),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Hero(
+                      tag: "herotags$currentpagenumber",
+                      child: Container(
                         width: 45,
                         height: 45,
                         decoration: BoxDecoration(
@@ -56,22 +49,34 @@ cardWidget(BuildContext context, int currentpagenumber) => Hero(
                               currentpagenumber % progressColors.length],
                         ),
                       ),
-                      const Icon(
-                        Icons.more_vert,
-                        color: Colors.black26,
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  AnimatedSlide(
-                    duration: const Duration(milliseconds: 300),
-                    offset: const Offset(0, 0),
-                    onEnd: () {
-                      const Offset(0, -1);
-                    },
-                    child: Column(
-                      children: [
-                        const Row(
+                    ),
+                    const Icon(
+                      Icons.more_vert,
+                      color: Colors.black26,
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                AnimatedSlide(
+                  duration: const Duration(milliseconds: 300),
+                  offset: const Offset(0, 0),
+                  onEnd: () {
+                    const Offset(0, -1);
+                  },
+                  child: Column(
+                    children: [
+                      Hero(
+                        flightShuttleBuilder: (flightContext,
+                                animation,
+                                flightDirection,
+                                fromHeroContext,
+                                toHeroContext) =>
+                            Material(
+                          color: Colors.transparent,
+                          child: toHeroContext.widget,
+                        ),
+                        tag: "tasks$currentpagenumber",
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
@@ -84,10 +89,22 @@ cardWidget(BuildContext context, int currentpagenumber) => Hero(
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Hero(
+                        flightShuttleBuilder: (flightContext,
+                                animation,
+                                flightDirection,
+                                fromHeroContext,
+                                toHeroContext) =>
+                            Material(
+                          color: Colors.transparent,
+                          child: toHeroContext.widget,
                         ),
-                        const Row(
+                        tag: "title$currentpagenumber",
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
@@ -100,10 +117,13 @@ cardWidget(BuildContext context, int currentpagenumber) => Hero(
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        LinearPercentIndicator(
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Hero(
+                        tag: "progress$currentpagenumber",
+                        child: LinearPercentIndicator(
                           lineHeight: 3,
                           percent: 0.7,
                           curve: Curves.easeIn,
@@ -119,12 +139,12 @@ cardWidget(BuildContext context, int currentpagenumber) => Hero(
                               color: Colors.grey.shade700,
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

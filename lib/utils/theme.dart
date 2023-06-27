@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeClass {
-  static const backgroundColor1 = Color(0xffF77B67);
+
   static const cardColor = Color(0xffFFFFFF);
   static const largeTextColor = Color(0xff666666);
   static const iconColor = Color(0xffD8D8D8);
