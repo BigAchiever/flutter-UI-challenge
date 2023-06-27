@@ -4,7 +4,7 @@ import 'package:todo_ui_challenge/utils/theme.dart';
 List<LinearGradient> backgroundGradients = [
   const LinearGradient(
     colors: [
-      Color.fromARGB(255, 211, 244, 175),
+      Color.fromARGB(255, 140, 171, 107),
       GradientColors.color1top,
       GradientColors.color1bottom
     ],
@@ -13,7 +13,7 @@ List<LinearGradient> backgroundGradients = [
   ),
   const LinearGradient(
     colors: [
-      GradientColors.colortopright,
+      Color.fromARGB(255, 85, 128, 171),
       GradientColors.color2top,
       GradientColors.color2bottom
     ],
@@ -22,7 +22,7 @@ List<LinearGradient> backgroundGradients = [
   ),
   const LinearGradient(
     colors: [
-      Color.fromARGB(255, 175, 244, 230),
+      Color.fromARGB(255, 119, 180, 168),
       Color.fromARGB(255, 50, 139, 120),
       Color.fromARGB(255, 37, 83, 92)
     ],

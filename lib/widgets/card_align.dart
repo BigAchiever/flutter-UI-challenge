@@ -4,10 +4,12 @@ import 'card_widget.dart';
 // ignore: must_be_immutable
 class CenteredCard extends StatelessWidget {
   int currentpagenumber;
+ 
 
   CenteredCard({
     super.key,
     required this.currentpagenumber,
+
   });
 
   @override
@@ -16,7 +18,7 @@ class CenteredCard extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 300, right: 5, left: 5),
-          child: cardWidget(context, currentpagenumber),
+          child: cardWidget(context, currentpagenumber ),
         ),
       ],
     );
